@@ -1,0 +1,16 @@
+services:
+  webserver:
+    volumes:
+      - ./dags:/usr/local/airflow/dags
+      - ./data:/usr/local/airflow/data
+      - ./scripts:/usr/local/airflow/scripts
+  scheduler:
+    volumes:
+      - ./dags:/usr/local/airflow/dags
+      - ./data:/usr/local/airflow/data
+      - ./scripts:/usr/local/airflow/scripts
+  triggerer:
+    volumes:
+      - ./dags:/usr/local/airflow/dags
+      - ./data:/usr/local/airflow/data
+      - ./scripts:/usr/local/airflow/scripts
