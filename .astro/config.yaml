@@ -1,11 +1,14 @@
 project:
   name: financial-fraud-detection
 
-deploy:
-  airflow:
-    image: astro-runtime:3.1-3
+deployments:
+  local:
+    executor: local
+    env:
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
     volumes:
       - ./dags:/usr/local/airflow/dags
+      - ./plugins:/usr/local/airflow/plugins
       - ./data:/usr/local/airflow/data
       - ./scripts:/usr/local/airflow/scripts
       - ./.kaggle:/root/.kaggle

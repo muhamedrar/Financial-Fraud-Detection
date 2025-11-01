@@ -1,19 +1,22 @@
 import os
+from dotenv import load_dotenv
+
+# Load .env BEFORE importing KaggleApi
+dotenv_path = os.path.join(os.path.dirname(__file__), '../.env')
+load_dotenv(dotenv_path)
+
+# Now import Kaggle API
 from kaggle.api.kaggle_api_extended import KaggleApi
 
+# Authenticate (reads env vars automatically)
+api = KaggleApi()
+api.authenticate()
 
-def download_kaggle_dataset(dataset_name: str, dest_path: str):
-    api = KaggleApi()
-    api.authenticate()
+# Paths
+dataset = 'sriharshaeedala/financial-fraud-detection-dataset'
+download_path = os.path.join(os.path.dirname(__file__), '../data')
+os.makedirs(download_path, exist_ok=True)
 
-    os.makedirs(dest_path, exist_ok=True)
-
-    print(f"Downloading dataset '{dataset_name}' to '{dest_path}'...")
-    api.dataset_download_files(dataset_name, path=dest_path, unzip=True)
-    print(f"✅ Dataset downloaded and extracted to: {dest_path}")
-
-if __name__ == "__main__":
-    dataset_name = "sriharshaeedala/financial-fraud-detection-dataset"
-    destination = "/usr/local/airflow/data"
-
-    download_kaggle_dataset(dataset_name, destination)
+# Download and unzip
+api.dataset_download_files(dataset, path=download_path, unzip=True)
+print(f"Dataset downloaded to {download_path}")
